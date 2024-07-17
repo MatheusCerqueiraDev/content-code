@@ -1,0 +1,87 @@
+// Controlled
+import React, { useState } from 'react';
+
+// The useState hook is used to manage the form data. 
+// The handleChange function updates the state as the user types, and the handleSubmit function handles the form submission.
+
+function ControlledForm() {
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('Form Data Submitted:', formData);
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <label>
+        Username:
+        <input
+          type="text"
+          name="username"
+          value={formData.username}
+          onChange={handleChange}
+        />
+      </label>
+      <label>
+        Email:
+        <input
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+        />
+      </label>
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+
+export default ControlledForm;
+
+
+// Uncontrolled
+
+// The useRef hook is used to create references to the form elements. 
+// The handleSubmit function then accesses the values of these elements via the refs.
+
+function UncontrolledForm() {
+  const usernameRef = useRef();
+  const emailRef = useRef();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = {
+      username: usernameRef.current.value,
+      email: emailRef.current.value,
+    };
+    console.log('Form Data Submitted:', formData);
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <label>
+        Username:
+        <input type="text" ref={usernameRef} />
+      </label>
+      <label>
+        Email:
+        <input type="email" ref={emailRef} />
+      </label>
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+
+export default UncontrolledForm;
